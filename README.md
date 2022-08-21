@@ -143,9 +143,12 @@ WHERE vigente = true
 GROUP BY carrera, vigente
 ORDER BY "Total de alumnos" DESC
 
-![image](https://user-images.githubusercontent.com/90301902/185771112-9b20070a-9e56-4676-8362-67260f39079b.png)
+![image](https://user-images.githubusercontent.com/90301902/185771146-e53ebc36-a354-4fe7-b59a-cd65f1a0f0d6.png)
 
-![image](https://user-images.githubusercontent.com/90301902/185770913-6899e745-3b01-46aa-bd75-4ccdbbd7c02c.png)
+![image](https://user-images.githubusercontent.com/90301902/185771190-9162f24a-3f2e-4c72-9c76-0d4132e070d7.png)
+
+
+
 
 
 
