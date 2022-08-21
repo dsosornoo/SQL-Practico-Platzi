@@ -125,6 +125,7 @@ consulta SQL
 
 Ejemplo de dblink
 
+```
 SELECT *
 FROM dblink('
 	dbname=somedb
@@ -137,7 +138,8 @@ FROM dblink('
 			block, the_geom
 	FROM massgis.cens2000blocks')
 	AS blockgroups
-  
+ 
+``` 
 Cúales son las TOP 10 carreras con mayor cantidad de alumnos que aun siguen vigentes?  
   SELECT carrera, count(alumnos.id) as "Total de alumnos", vigente
 FROM platzi.alumnos 
@@ -231,6 +233,7 @@ Y en el último le decimos que ponga todas las filas que no sean igual a lo que 
 Igual podemos decir que nos traiga registros que estén vacíos o que no lo estén.
 
 
+```
 SELECT * 
 FROM users
 WHERE name IS NULL;
@@ -245,6 +248,7 @@ FROM users
 WHERE name IN ('Israel','Laura','Luis');
 
 
+```
 
 
 
