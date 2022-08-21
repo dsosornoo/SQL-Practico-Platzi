@@ -1,7 +1,7 @@
 # SQL-Practico-Platzi
 
 
-##Clase 1: Breve historia de SQL
+## Clase 1: Breve historia de SQL
 
 SQL (Structured Query Language - Lenguaje de consulta estructurada) es un lenguaje que se basó en 2 principios fundamentales:
 
@@ -15,7 +15,7 @@ Relation Company (actualmente con el nombre Oracle) creó el software Oracle V2 
 
 Mas adelante SQL se convertiría en un lenguaje estándar que unifica todo dentro de las bases de datos relacionales, se convierte en una norma ANSI o ISO.
 
-##Clase 2: Álgebra relacional
+## Clase 2: Álgebra relacional
 
 El álgebra relacional estudia basicamente las operaciones que se pueden realizar entre diversos conjuntos de datos.
 ⠀
@@ -43,9 +43,9 @@ Alumnos_Quinto_A x Alumnos_Quinto_B
 - Diferencia (-): Obtiene los elementos que existe en una de las tablas pero que no corresponde a la otra tabla.
 Alumnos_planExpertPlus - Alumnos_planFree
 
-##Clase 3: Instalacion Postgre
+## Clase 3: Instalacion Postgre
 
-##Clase 4: Qué es una proyección (SELECT)
+## Clase 4: Qué es una proyección (SELECT)
 
 Proyección significa elegir QUE columnas (o expresiones) la consulta debe retornar.
 Selección significa CUALES SON las columnas retornadas.
@@ -102,7 +102,7 @@ CASE
 END AS ValorResultado;
 
 
-##Clase 5 Origen(From)
+## Clase 5 Origen(From)
 
 Con SELECT se especifica que columnas queremos obtener de una tabla determinada y con FROM se indica de donde se va a obtener la información que se va proyectar con SELECT. FROM va después de SELECT
 
@@ -147,14 +147,14 @@ WHERE vigente = true
 GROUP BY carrera, vigente
 ORDER BY "Total de alumnos" DESC
 
-##Clase 6 Productos cartesianos (JOIN)
+## Clase 6 Productos cartesianos (JOIN)
 El producto cartesiano es una operación de la teoría de conjuntos en la que dos o más conjuntos se combinan entre sí. En el modelo de base de datos relacional se utiliza el producto cartesiano para interconectar conjuntos de tuplas en la forma de una tabla. El resultado de esta operación es otro conjunto de tuplas ordenadas, donde cada tupla está compuesta por un elemento de cada conjunto inicial.
 
 ![image](https://user-images.githubusercontent.com/90301902/185771146-e53ebc36-a354-4fe7-b59a-cd65f1a0f0d6.png)
 
 ![image](https://user-images.githubusercontent.com/90301902/185771190-9162f24a-3f2e-4c72-9c76-0d4132e070d7.png)
 
-##Clase 7 Seleccion(Where)
+## Clase 7 Seleccion(Where)
 
 WHERE es usado para filtrar registros.
 WHERE es cuando para extraer solamente las condiciones que cumplen con esa condición.
