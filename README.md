@@ -150,7 +150,7 @@ El producto cartesiano es una operación de la teoría de conjuntos en la que do
 
 ![image](https://user-images.githubusercontent.com/90301902/185771190-9162f24a-3f2e-4c72-9c76-0d4132e070d7.png)
 
-<em>Clase 7 Seleccion(Where)<em>
+<em>Clase 7 Seleccion(Where)</em>
 WHERE es usado para filtrar registros.
 WHERE es cuando para extraer solamente las condiciones que cumplen con esa condición.
 
