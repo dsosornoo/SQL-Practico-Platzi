@@ -143,11 +143,101 @@ WHERE vigente = true
 GROUP BY carrera, vigente
 ORDER BY "Total de alumnos" DESC
 
+Clase 6 Productos cartesianos (JOIN)
+El producto cartesiano es una operación de la teoría de conjuntos en la que dos o más conjuntos se combinan entre sí. En el modelo de base de datos relacional se utiliza el producto cartesiano para interconectar conjuntos de tuplas en la forma de una tabla. El resultado de esta operación es otro conjunto de tuplas ordenadas, donde cada tupla está compuesta por un elemento de cada conjunto inicial.
+
 ![image](https://user-images.githubusercontent.com/90301902/185771146-e53ebc36-a354-4fe7-b59a-cd65f1a0f0d6.png)
 
 ![image](https://user-images.githubusercontent.com/90301902/185771190-9162f24a-3f2e-4c72-9c76-0d4132e070d7.png)
 
+<em>Clase 7 Seleccion(Where)<em>
+WHERE es usado para filtrar registros.
+WHERE es cuando para extraer solamente las condiciones que cumplen con esa condición.
 
+SELECT *
+FROM tabla_diaria
+WHERE id=1;
+
+SELECT *
+FROM tabla_diaria
+WHERE cantidad>10;
+
+SELECT *
+FROM tabla_diaria
+WHERE cantidad<100;
+Este puede ser combinado con AND ,OR y NOT.
+
+AND y OR son usados para filtrar registros de más de una condición.
+
+AND muestra un registro si todas las condiciones separadas por AND son TRUE.
+OR muestra un registro si alguna de las condiciones separadas por OR son TRUE.
+SELECT *
+FROM tabla_diaria
+WHERE cantidad > 10
+	AND cantidad < 100;
+
+SELECT *
+FROM tabla_diaria
+WHERE cantidad BETWEEN 10
+	AND cantidad < 100;
+BETWEEN puede ser usado para definir límites.
+
+La separación por paréntesis es muy importante.
+
+SELECT * 
+FROM users
+WHERE name = "Israel"
+	AND (
+	lastname = "Vázquez"
+	OR
+	lastname = "López"
+);
+
+SELECT * 
+FROM users
+WHERE name = "Israel"
+	AND 
+	lastname = "Vázquez"
+	OR
+	lastname = "López";
+En el primero va a devolver todos los que son Israel Vázquez o Israel López, en el segundo devolverá a todos los que se llaman Israel Vázquez o se apellida López(sólo apellido).
+
+NOT valida que un dato no sea TRUE.
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE NOT condition;
+Para especificar patrones en una columna usamos LIKE. Podemos mostrar diferentes cosas que buscamos.
+
+SELECT *
+FROM users
+WHERE name LIKE "Is%";
+
+SELECT *
+FROM users
+WHERE name LIKE "Is_ael";
+
+SELECT *
+FROM users
+WHERE name NOT LIKE "Is_ael";
+En el primero, colocamos un % para representar que se va a buscar lo que tenga is% pero que no importa los carácteres después de %.
+En el segundo le estamos diciendo con _ que puede haber lo que sea en medio de Is y ael.
+Y en el último le decimos que ponga todas las filas que no sean igual a lo que arriba estabamos buscando.
+Igual podemos decir que nos traiga registros que estén vacíos o que no lo estén.
+
+
+SELECT * 
+FROM users
+WHERE name IS NULL;
+
+SELECT *
+FROM users
+WHERE name IS NOT NULL;
+Y para seleccionar filas con datos específicos, usamos IN.
+
+SELECT *
+FROM users
+WHERE name IN ('Israel','Laura','Luis');
 
 
 
