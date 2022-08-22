@@ -161,6 +161,9 @@ El producto cartesiano es una operación de la teoría de conjuntos en la que do
 
 ## Clase 7 Seleccion(Where)
 
+![image](https://user-images.githubusercontent.com/90301902/185812399-850eb727-d136-4449-9c41-b1327ab84e71.png)
+
+
 WHERE es usado para filtrar registros.
 WHERE es cuando para extraer solamente las condiciones que cumplen con esa condición.
 
@@ -269,5 +272,105 @@ WHERE name IN ('Israel','Laura','Luis');
 
 ```
 
+Ejemplo comentarios
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE colegiatura = 2000;
+```
+Mayor que
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE colegiatura > 2000;
+```
+Menor que
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE colegiatura < 4000;
+
+```
+Entre
+Opcion No. 1
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE colegiatura > 2000
+   AND colegiatura < 4000;
+```
+Entre
+Opcion No. 2
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE colegiatura BETWEEN 2000 AND 4000;
+
+```
+And y Or
+Opcion No. 1
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre = 'Edin'
+   AND (apellido = 'Keatch' OR apellido = 'Grishin');
+```
+And y Or
+Opcion No. 2
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre = 'Edin'
+   AND apellido = 'Keatch' 
+    OR apellido = 'Grishin';
+```
+Comodin que empieza con Al
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre LIKE 'Al%';
+```
+Comodin que termina con Al
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre LIKE '%er';
+```
+Comodin que contiene con er
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre LIKE '%er%';
+```
+Comodin que no contiene con er
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre NOT LIKE '%er%';
+ ```
+Comodin que varia la ultima letra
+```
+SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre LIKE 'Ali_'
+```
+Null
+```
+  SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE apellido IS NULL;
+```
+Not Null
+```
+  SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE apellido IS NOT NULL;
+```
+In
+```
+ SELECT *
+  FROM PRUEBAS.ALUMNOS
+ WHERE nombre IN ('Wanda', 'Hilde', 'Veriee');
+```
 
 
