@@ -372,7 +372,7 @@ In
   FROM PRUEBAS.ALUMNOS
  WHERE nombre IN ('Wanda', 'Hilde', 'Veriee');
 ```
-## Ordenamiento (ORDER BY)
+## CLASE 8 Ordenamiento (ORDER BY)
 Las partes más importantes y más usadas de los queries de SQL son:
 -La proyección (con SELECT)
 -El origen de los datos (Con FROM y sus JOIN)
@@ -406,3 +406,104 @@ Descendente
   FROM PRUEBAS.ALUMNOS
 ORDER BY fecha_incorporacion DESC;
 ```
+## CLASE 9 Agregación y limitantes (GROUP BY y LIMIT)
+GROUP BY es una sentencia que agrupa filas que tienen el mismo valor en columnas con el sumatorio. Como decirle ‘encuentra el número de clientes en cada país’.
+
+Suele usarse frecuentemente con las funciones COUNT MAX MIN MAX SUM AVG a un grupo de una o más columnas.
+```
+SELECT *
+FROM tabla_diaria
+GROUP BY marca;
+```
+```
+SELECT *
+FROM tabla_diaria;
+GROUP BY marca, modelo;
+```
+```
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;
+SELECT TOP es usada para especificar el número de registros que se van a retornar.
+```
+SELECT TOP es útil para tablas con miles de registros, pues un gran número de registros puede afectar el rendimiento.
+```
+SELECT TOP number
+FROM table1
+WHERE condition;
+```
+```
+SELECT TOP 1500
+FROM tabla_diaria;
+```
+## CLASE 10 Primero
+```
+SELECT *
+--el row que queremos medir y la totalidad de row en un grupo, 
+--si no seleccionas nada es toda la tabla
+from (
+	--window function row_number
+	--trae el numero de registro indiferente al criterio que seponga
+	-- over si no pone nada trae toda la tabla es agnostico
+	select row_number() over() as row_id, *
+	from platzi.alumnos
+) as alumnos_with_row_num
+;
+```
+Reto: Primeros 5 registros de la tabla
+1.
+SELECT *
+
+from (
+	select row_number() over() as row_id, *
+	from platzi.alumnos
+) as alumnos_with_row_num
+limit 5;
+
+
+2.
+SELECT *
+from (
+	select row_number() over() as row_id, *
+	from platzi.alumnos
+) as alumnos_with_row_num
+where row_id <= 5;
+
+
+3.
+SELECT * from platzi.alumnos
+limit 5;
+
+4.
+SELECT * from platzi.alumnos
+where id <= 5;
+5.
+SELECT * from platzi.alumnos
+fetch first 5 rows only;
+6.
+SELECT *
+from (
+	select row_number() over() as row_id, *
+	from platzi.alumnos
+) as alumnos_with_row_num
+fetch first 5 row_id only;
+7.
+SELECT * from platzi.alumnos
+where id BETWEEN 1 and 5;
+8.
+SELECT *
+from (
+	select row_number() over() as row_id, *
+	from platzi.alumnos
+) as alumnos_with_row_num
+where row_id BETWEEN 1 and 5;
+9.
+SELECT * from platzi.alumnos
+where 1<= id and id <=5;
+
+## Clase 11 el segundo mas alto
+
+## Clase 12 Seleccion de un set de opciones
+
+
