@@ -102,7 +102,7 @@ CASE
 END AS ValorResultado;
 
 
-## Clase 5 Origen(From)
+## Clase 5: Origen(From)
 
 Con SELECT se especifica que columnas queremos obtener de una tabla determinada y con FROM se indica de donde se va a obtener la información que se va proyectar con SELECT. FROM va después de SELECT
 
@@ -152,7 +152,7 @@ GROUP BY carrera, vigente
 ORDER BY "Total de alumnos" DESC
 
 ```
-## Clase 6 Productos cartesianos (JOIN)
+## Clase 6: Productos cartesianos (JOIN)
 El producto cartesiano es una operación de la teoría de conjuntos en la que dos o más conjuntos se combinan entre sí. En el modelo de base de datos relacional se utiliza el producto cartesiano para interconectar conjuntos de tuplas en la forma de una tabla. El resultado de esta operación es otro conjunto de tuplas ordenadas, donde cada tupla está compuesta por un elemento de cada conjunto inicial.
 
 ![image](https://user-images.githubusercontent.com/90301902/185771146-e53ebc36-a354-4fe7-b59a-cd65f1a0f0d6.png)
@@ -372,7 +372,7 @@ In
   FROM PRUEBAS.ALUMNOS
  WHERE nombre IN ('Wanda', 'Hilde', 'Veriee');
 ```
-## CLASE 8 Ordenamiento (ORDER BY)
+## CLASE 8: Ordenamiento (ORDER BY)
 Las partes más importantes y más usadas de los queries de SQL son:
 -La proyección (con SELECT)
 -El origen de los datos (Con FROM y sus JOIN)
@@ -406,7 +406,7 @@ Descendente
   FROM PRUEBAS.ALUMNOS
 ORDER BY fecha_incorporacion DESC;
 ```
-## CLASE 9 Agregación y limitantes (GROUP BY y LIMIT)
+## CLASE 9: Agregación y limitantes (GROUP BY y LIMIT)
 GROUP BY es una sentencia que agrupa filas que tienen el mismo valor en columnas con el sumatorio. Como decirle ‘encuentra el número de clientes en cada país’.
 
 Suele usarse frecuentemente con las funciones COUNT MAX MIN MAX SUM AVG a un grupo de una o más columnas.
@@ -437,7 +437,7 @@ WHERE condition;
 SELECT TOP 1500
 FROM tabla_diaria;
 ```
-## CLASE 10 Primero
+## CLASE 10: Primero
 ```
 SELECT *
 --el row que queremos medir y la totalidad de row en un grupo, 
@@ -453,6 +453,7 @@ from (
 ```
 Reto: Primeros 5 registros de la tabla
 1.
+```
 SELECT *
 
 from (
@@ -460,50 +461,164 @@ from (
 	from platzi.alumnos
 ) as alumnos_with_row_num
 limit 5;
+```
 
 
 2.
+```
 SELECT *
 from (
 	select row_number() over() as row_id, *
 	from platzi.alumnos
 ) as alumnos_with_row_num
 where row_id <= 5;
-
+```
 
 3.
+```
 SELECT * from platzi.alumnos
 limit 5;
+```
 
 4.
+```
 SELECT * from platzi.alumnos
 where id <= 5;
+```
 5.
+```
 SELECT * from platzi.alumnos
 fetch first 5 rows only;
+```
 6.
+```
 SELECT *
 from (
 	select row_number() over() as row_id, *
 	from platzi.alumnos
 ) as alumnos_with_row_num
 fetch first 5 row_id only;
+```
 7.
+```
 SELECT * from platzi.alumnos
 where id BETWEEN 1 and 5;
+```
 8.
+```
 SELECT *
 from (
 	select row_number() over() as row_id, *
 	from platzi.alumnos
 ) as alumnos_with_row_num
 where row_id BETWEEN 1 and 5;
+```
 9.
+```
 SELECT * from platzi.alumnos
 where 1<= id and id <=5;
-
+```
 ## Clase 11 el segundo mas alto
+Ejemplo 1
+```
+-- distinct trae los valores no repetidos
+SELECT DISTINCT colegiatura 
+from platzi.alumnos as al
+where 2 =(
+	select count(distinct colegiatura)
+	from platzi.alumnos as al2
+	where al.colegiatura<=al2.colegiatura
+);
+```
+```
+select distinct colegiatura,tutor_id
+from platzi.alumnos 
+where tutor_id=20
+order by colegiatura DESC
+limit 1 offset 1;
+```
+```
+select * 
+from platzi.alumnos as datos
+inner join 
+(
+	select distinct colegiatura
+	from platzi.alumnos
+	where tutor_id=20
+	order by colegiatura desc
+	limit 1 offset 1
+) as segunda_mayor_colegiatura
+on datos.colegiatura = segunda_mayor_colegiatura.colegiatura;
+```
+```
+select *
+from platzi.alumnos as datos
+where colegiatura=(
+	select distinct colegiatura
+	from platzi.alumnos
+	where tutor_id=20
+	order by colegiatura DESC
+	limit 1 offset 1
+)
+```
+Reto la segundo mitad de la tabla
+```
+SELECT * 
+FROM platzi.alumnos 
+OFFSET ( SELECT (COUNT(id)/2) FROM platzi.alumnos )
+
+```
+```
+SELECT 	*
+FROM	platzi.alumnos
+WHERE 	id > 500
+;
+
+```
+```
+SELECT * FROM platzi.alumnos 
+LIMIT 500 OFFSET 500;
+```
+```
+SELECT *
+FROM platzi.alumnos
+OFFSET 499;
+```
 
 ## Clase 12 Seleccion de un set de opciones
 
+## Clase 13 En mis tiempos
 
+## Clase 14 seleccionar por año
+
+## Clase 15 
+
+## Clase 16
+
+## Clase 17 
+
+## Clase 18 
+
+## Clase 19 
+
+## Clase 20
+
+## Clase 21
+
+
+## Clase 22
+
+
+## Clase 23
+
+## Clase 24
+
+## Clase 25
+
+## Clase 26
+
+## Clase 27
+
+## Clase 28
+
+## Clase 29
