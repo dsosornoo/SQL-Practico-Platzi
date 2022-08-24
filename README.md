@@ -669,14 +669,245 @@ extract( SECOND from fecha_incorporacion) as segundos
 from platzi.alumnos;
 ```
 ## Clase 14 seleccionar por año
+Ejemplos
+```
+select *
+from platzi.alumnos
+where (
+extract(year from fecha_incorporacion))=2019;
+```
 
-## Clase 15 
+```
+select *
+from platzi.alumnos
+where ( Date_part('Year',fecha_incorporacion))=2019;
+```
+```
 
-## Clase 16
+select *
+from (
+	select*, 
+	  	Date_part('Year',fecha_incorporacion) as years
+	from platzi.alumnos
+)as alumnos_year
+where years=2020
+```
+Reto
+```
+select *
+from platzi.alumnos
+where 
+extract(year from fecha_incorporacion)=2018
+and
+extract(month from fecha_incorporacion)=05;
+```
+```
+SELECT *
+FROM (
+	SELECT *,
+		DATE_PART('YEAR', fecha_incorporacion) AS annio_inicio,
+		DATE_PART('MONTH', fecha_incorporacion) AS mes_inicio
+	FROM platzi.alumnos
+) AS year_alumnos
+WHERE annio_inicio = 2018 AND mes_inicio = 5;
+```
+
+Ejercicios interesantes
+1 Dia 2018
+
+```
+--el día de la semana en donde 
+--mas se registraron personas para el 2018
+SELECT 
+case
+	when extract(DOW from fecha_incorporacion) = 0 then'domingo'
+	when extract(DOW from fecha_incorporacion) = 1 then'lunes'
+	when extract(DOW from fecha_incorporacion) = 2 then'martes'
+	when extract(DOW from fecha_incorporacion) = 3 then'miercoles'
+	when extract(DOW from fecha_incorporacion) = 4 then'jueves'
+	when extract(DOW from fecha_incorporacion) = 5 then'viernes'
+	when extract(DOW from fecha_incorporacion) = 6 then'sabado'
+end dia_semana,
+COUNT(*) AS total 
+from platzi.alumnos
+where extract(YEAR from fecha_incorporacion) = 2018
+group by dia_semana
+order by total desc;
+```
+
+2 dia 2018
+```
+--el día de la semana en donde 
+--mas se registraron personas para el 2018
+select extract(dow from fecha_incorporacion) as dia,
+count(extract(dow from fecha_incorporacion)) as conteo
+FROM platzi.alumnos
+where extract(YEAR from fecha_incorporacion) = 2018
+GROUP by dia 
+order by conteo desc;
+
+```
+3 mes 2018
+```
+--el mes en donde mas se registraron personas para el 2018
+
+select extract(month from fecha_incorporacion) as mes,
+count(extract(month from fecha_incorporacion)) as conteo
+FROM platzi.alumnos
+GROUP by mes 
+order by mes asc;
+```
+
+
+
+## Clase 15 Duplicados
+En el ejercicio de encontrar un DUPLICADO, se está haciendo una partición de la tabla de todos los valores en filas de cada una de las variables o columnas de la tabla a excepción del id, el cual no puede ser igual y no se repite al ser una primary key.
+
+Cuando se aplica esta partición en cada valor se hace único los valores, es decir, cada row viene siendo una partición, y al utilizar la función agregada que en este caso es ROW_NUMBER() va a contar los valores de cada una de las particiones haciendo que se reinicie los “números de fila” cuando salta de partición en partición. por eso, cuando encuentra dos valores iguales, enumera los dos valores, dejando como valor en su row un 2.
+Ejemplos
+```
+--seleccionar aquel registro que esta repetido
+select *
+from platzi.alumnos as ou
+where(
+	select count(*)
+	from platzi.alumnos as inr
+	where ou.id=inr.id
+)>1;
+```
+
+
+```
+--select a todos los campos de la tabla
+-- :: es hacer un case, que convierte todos
+--los campos en un texto
+select(platzi.alumnos.*)::text, count(*)
+from platzi.alumnos
+group by platzi.alumnos.*
+HAVING count(*)>1
+```
+
+```
+select(platzi.alumnos.nombre,
+	   platzi.alumnos.apellido,
+	   platzi.alumnos.email,
+	   platzi.alumnos.colegiatura,
+	   platzi.alumnos.fecha_incorporacion
+	  )::text, count(*)
+from platzi.alumnos
+group by platzi.alumnos.nombre,platzi.alumnos.apellido,
+platzi.alumnos.email, platzi.alumnos.colegiatura,
+platzi.alumnos.fecha_incorporacion
+HAVING count(*)>1
+
+```
+
+```
+select*
+from(       
+	select id,
+	row_number() over(
+		partition by
+			nombre,
+			apellido,
+			email,
+			colegiatura,
+			fecha_incorporacion,
+			carrera_id,
+			tutor_id
+		order by id asc
+	)AS row,
+	* 
+	from platzi.alumnos
+)AS duplicados
+where duplicados.row > 1
+```
+Reto
+```
+DELETE FROM platzi.alumnos
+WHERE id IN (
+SELECT id
+FROM (
+	SELECT id,
+	ROW_NUMBER() over(
+		PARTITION BY
+			nombre,
+			apellido,
+			email,
+			colegiatura,
+			fecha_incorporacion,
+			carrera_id,
+			tutor_id
+		ORDER BY id ASC
+	)AS row
+	
+	FROM platzi.alumnos
+)AS duplicados
+WHERE duplicados.row > 1)
+```
+```
+```
+```
+```
+
+## Clase 16 selectores de rango
+
+Los tipos de rango que vienen en PostgreSQL son:
+
+int4range: Que trae un rango de enteros.
+
+int8range: Es un rango de enteros grandes.
+
+numrange: Es un rango numérico.
+
+tsrange: Es un rango del tipo timestamp pero sin la zona horaria.
+
+tstzrange: Es un rango del tipo timestamp con la zona horaria
+
+daterange: Es un rango del tipo fecha.
+```
+```
+
+```
+```
+```
+```
+```
+```
+```
+```
+```
+```
 
 ## Clase 17 
+```
+```
+
+```
+```
+```
+```
+```
+```
+```
+```
+```
+```
 
 ## Clase 18 
+```
+```
+
+```
+```
+```
+```
+```
+```
+```
+```
+```
+```
 
 ## Clase 19 
 
