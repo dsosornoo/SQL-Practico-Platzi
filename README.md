@@ -586,9 +586,83 @@ OFFSET 499;
 ```
 
 ## Clase 12 Seleccion de un set de opciones
+Ejemplos:
+```
+select *
+from(
+	select row_number() over() as row_id,*
+	from platzi.alumnos
+)as alumnos_with_row_num
+-- valores separados por coma recibe in para que los traiga especificamente
+where row_id in (1,5,10,12,15,20);
+
+```
+```
+select *
+from platzi.alumnos
+where id in(
+	select id
+	from platzi.alumnos
+	where tutor_id=30	
+);
+```
+Retos
+```
+select *
+from platzi.alumnos
+where id not in(
+	select id
+	from platzi.alumnos
+	where tutor_id=30	
+);
+
+```
+```
+select *
+from platzi.alumnos
+where id in(
+	select id
+	from platzi.alumnos
+	where tutor_id!=30	
+);
+```
+```
+
+select *
+from platzi.alumnos
+where id in(
+	select id
+	from platzi.alumnos
+	where tutor_id<>30	
+);
+```
 
 ## Clase 13 En mis tiempos
+Ejemplos:
+```
+select extract( year from fecha_incorporacion) as years
+from platzi.alumnos;
+```
+```
+select date_part('Year',fecha_incorporacion) as years
+from platzi.alumnos;
+```
+```
+select date_part('Year',fecha_incorporacion) as years,
+date_part('Month',fecha_incorporacion) as months,
+date_part('Days',fecha_incorporacion) as days
+from platzi.alumnos;
+```
+Reto Hora Minuto Segundo
+```
+select date_part('Hour',fecha_incorporacion) as Hours,
+date_part('Minute',fecha_incorporacion) as Minutes,
+date_part('Second',fecha_incorporacion) as Seconds
+from platzi.alumnos;
+```
 
+```
+```
 ## Clase 14 seleccionar por año
 
 ## Clase 15 
