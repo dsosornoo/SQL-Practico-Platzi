@@ -662,6 +662,11 @@ from platzi.alumnos;
 ```
 
 ```
+SELECT
+extract( HOUR from fecha_incorporacion) as hora,
+extract( MINUTE from fecha_incorporacion) as minutos,
+extract( SECOND from fecha_incorporacion) as segundos
+from platzi.alumnos;
 ```
 ## Clase 14 seleccionar por año
 
