@@ -1,6 +1,6 @@
 # SQL-Practico-Platzi
 
-
+#Introduccion a SQL
 ## Clase 1: Breve historia de SQL
 
 SQL (Structured Query Language - Lenguaje de consulta estructurada) es un lenguaje que se basó en 2 principios fundamentales:
@@ -437,7 +437,8 @@ WHERE condition;
 SELECT TOP 1500
 FROM tabla_diaria;
 ```
-## CLASE 10: Primero
+# Ejercitando tu SQL
+## CLASE 10: El Primero
 ```
 SELECT *
 --el row que queremos medir y la totalidad de row en un grupo, 
@@ -1083,31 +1084,35 @@ select concat(a.nombre,'-',a.apellido) as alumno,
 		c.id,
 		c.carrera
 from platzi.alumnos as a
-	left join platzi.carreras as c
+	full outer join platzi.carreras as c
 	on a.carrera_id = c.id
 
 order by a.carrera_id desc;
 ```
 
 
-## Clase 20
+## Clase 20 Todas las uniones
 
-## Clase 21
-
-
-## Clase 22
+![image](https://user-images.githubusercontent.com/90301902/186685496-85ba1c9d-0a0f-4caf-a949-b4c47ab4016d.png)
 
 
-## Clase 23
+## Clase 21 Triangulando
 
-## Clase 24
 
-## Clase 25
+## Clase 22 Generando rangos
 
-## Clase 26
 
-## Clase 27
+## Clase 23 Regularizando expresiones
+# Conceptos de SQL avanzado
 
-## Clase 28
+## Clase 24 bases de datos distribuidas
 
-## Clase 29
+## Clase 25 queries distribuidos
+
+## Clase 26 sharding
+
+## Clase 27 window functions
+
+## Clase 28 particiones y agregacion
+
+## Clase 29 el futuro de sql
