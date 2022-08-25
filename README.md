@@ -1177,7 +1177,99 @@ order by a.carrera_id desc;
 ## Clase 20 Todas las uniones
 
 ![image](https://user-images.githubusercontent.com/90301902/186685496-85ba1c9d-0a0f-4caf-a949-b4c47ab4016d.png)
+Ejemplos:
+Left join exlusivo
+```
+--la tabla alumnos sin interseccion
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	left join platzi.carreras as c
+	on a.carrera_id = c.id
+where c.id is null	
+order by c.id desc;
 
+```
+left join 
+```
+--tabla alumnos incluyendo la interseccion
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	left join platzi.carreras as c
+	on a.carrera_id = c.id
+order by c.id desc;
+```
+right join
+```
+-- tabla carrera con intersecion
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	right join platzi.carreras as c
+	on a.carrera_id = c.id
+order by c.id desc;
+```
+right join exlusivo
+```
+-- tabla carrera sin intersecion
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	right join platzi.carreras as c
+	on a.carrera_id = c.id
+where a.id is null
+order by c.id desc;
+```
+Inner join
+join por default es el inner join
+```
+-- la parte en comun que tiene ambas tablas
+-- la interseccion
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	inner join platzi.carreras as c
+	on a.carrera_id = c.id
+order by c.id desc;
+```
+Full outer join ambas tablas completas
+```
+-- ambas tablas
+
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	full outer join platzi.carreras as c
+	on a.carrera_id = c.id
+order by a.carrera_id desc, c.id desc;
+```
+Diferencia simetrica
+```
+-- es la tabla carrera y alumnos sin la interseccion
+
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	full outer join platzi.carreras as c
+	on a.carrera_id = c.id
+where a.id is null or c.id is null
+order by a.carrera_id desc, c.id desc;
+```
 
 ## Clase 21 Triangulando
 
