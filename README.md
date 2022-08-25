@@ -865,48 +865,184 @@ tsrange: Es un rango del tipo timestamp pero sin la zona horaria.
 tstzrange: Es un rango del tipo timestamp con la zona horaria
 
 daterange: Es un rango del tipo fecha.
+
+
+=>’ Significa ‘devuelve’ en este apunte
+
+‘&&’ si se solapan estos dos rangos
+
+(11.1,22.2) && (20.0,30.0) => TRUE
+(11.1,19.9) && (20.0,30.0) => FALSE
+
+
+* Para seleccionar los elementos de la interseccion entre los dos rangos. SI no hay, marca error
+
 ```
+SELECT int4ramge(10,20) * int4range(15,25) =>[15,20)
+```
+@> si el rango se encuentra en el grupo
+
+```
+SELECT *
+FROM platzi.alumnos
+WHERE int4range(10,20) @> tutor_id
 ```
 
 ```
-```
-```
-```
-```
-```
-```
-```
-```
-```
-
-## Clase 17 
-```
+select *
+from platzi.alumnos
+where tutor_id in (1,2,3,4);
 ```
 
 ```
+select *
+from platzi.alumnos
+where tutor_id >=1
+and tutor_id <=10;
 ```
 ```
+--genera enteros de 10 a 20 @> si pertenece o no
+select int4range(10,20)@>3;
 ```
 ```
+-- genera un rango numerico mas amplio que incluye decimales
+select numrange(11.1,22.2) && numrange(20.0,30.0);
 ```
 ```
+-- upper valor mas alto del rango
+select upper (int8range(15,25));
 ```
+```
+-- lower valor mas bajo del rango
+select lower (int8range(15,25));
+```
+```
+--* nos devuelve la interseccion entre ambos rangos
+
+select int4range(10,20)* int4range(15,25);
+```
+```
+--nos comprueba si el conjunto es vacio o no
+select isempty (numrange(1,5));
+
+```
+```
+select * 
+from platzi.alumnos
+where int4range(10,20) @> tutor_id;
+```
+reto
+```
+
+select 
+int8range(min(tutor_id),max(tutor_id))
+* int8range(min(carrera_id),max(carrera_id))
+from platzi.alumnos
+```
+## Clase 17 Eres lo maximo
+Ejemplos:
+```
+select fecha_incorporacion
+from platzi.alumnos
+order by fecha_incorporacion desc
+limit 1;
+```
+
+```
+--trae todos los registros por que la fecha tiene hasta segundos 
+--haciendo diferente cada dato
+select carrera_id, fecha_incorporacion
+from platzi.alumnos
+group by carrera_id, fecha_incorporacion
+order by fecha_incorporacion desc;
+```
+```
+--limit  permite solamente de la tabla completa
+--max permite agrupar de acuerdo a mas criterios
+-- cual es la fecha mas reciente en la que un alumno 
+--ingreso a una carrera
+select carrera_id, max(fecha_incorporacion)
+from platzi.alumnos
+group by carrera_id
+order by carrera_id;
+```
+Retos:
+```
+--minimo nombre
+select min(nombre)
+from platzi.alumnos
+```
+```
+-- minimo por id de tutor
+
+select  tutor_id,min(nombre)
+from platzi.alumnos
+group by tutor_id
+order by tutor_id;
+```
+
+
+## Clase 18 Egoista(selfish)
+SELF JOINS
+
+Personalmente considero que a la hora de hacer self-joins es de especial importancia más que en otros casos el hecho de comentar el código
+En este caso aclararía en el código que recurrí a esta técnica, ya que los tutores a la vez son alumnos, de ahí que puedo obtener toda la información de la propia tabla
+```
+select a.nombre,a.apellido,t.nombre,t.apellido
+from platzi.alumnos as a
+	inner join platzi.alumnos as t 
+	on a.tutor_id = t.id
+```
+
+
+```
+-- 10 tutores que tienen mas alumnos
+select concat(t.nombre,'-',t.apellido) as tutor ,
+	count(*) as alumnos_por_tutor
+from platzi.alumnos as a
+	inner join platzi.alumnos as t 
+	on a.tutor_id = t.id
+group by tutor
+order by alumnos_por_tutor desc
+limit 10;
+```
+Reto version 1
+```
+select AVG(alumnos_por_tutor) as promedio_alumnos
+from(
+select	concat(t.nombre,' ',t.apellido) as tutor ,
+	count(*) as alumnos_por_tutor
+from platzi.alumnos as a
+	--se asume que los tutores son alumnos pero no todos los alumnos son tutores
+	inner join platzi.alumnos as t 	on a.tutor_id = t.id
+group by tutor
+order by alumnos_por_tutor desc)
+as promedio;
+
+```
+Version 2
+```
+SELECT AVG(n_alumnos) AS promedio_alumnos
+FROM (
+     SELECT COUNT(*) AS n_alumnos FROM platzi.alumnos
+     GROUP BY tutor_id
+         ) AS tabla_num_alumnos_por_tutor;
+```
+tutores promedio por carrera v1
+```
+select AVG(prom_tutor.tutor_carrera) as promedio_alumnos
+from(
+select	concat(t.nombre,' ',t.apellido) as tutor ,
+	count(*) as tutor_carrera, a.carrera_id
+from platzi.alumnos as a
+	inner join platzi.alumnos as t 	on a.tutor_id = t.id
+	and a.carrera_id=t.tutor_id
+group by tutor,a.carrera_id
+order by tutor_carrera desc)
+as prom_tutor;
 ```
 ```
 
-## Clase 18 
-```
-```
-
-```
-```
-```
-```
-```
-```
-```
-```
-```
 ```
 
 ## Clase 19 
