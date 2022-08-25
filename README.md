@@ -1273,6 +1273,54 @@ order by a.carrera_id desc, c.id desc;
 
 ## Clase 21 Triangulando
 
+Lpad: rellena por la izquierda.
+P.e. lpad(‘437’,5,‘0’)
+tendría como resultado 00437.
+
+RPad: rellena por la derecha.
+P.e. rpad(‘437’,5,‘0’)
+tendría como resultado 43700.
+
+Lpad
+-- que sql  se muestre al  final
+-- despues de * aparesca 15 veces
+--lpad alconchonamiento a la izquierda
+--con que rellenas a la izquierda
+-- para que al final aparezca la cadena
+--del principio o primer ''
+--lpad estatico
+```
+select lpad('sql',15,'*')
+```
+lpad dinamico
+
+```
+--a sql le va añadiendo
+--cuando id 1 solo sale s
+--cuando id 2 solo sale sq
+--cuando id 3 sale sql
+--apartir de id 4 en adelante 
+--va agregando * por cada id adicional
+
+select lpad('sql',id,'*')
+from platzi.alumnos
+where id<10
+```
+```
+select lpad('*',cast(row_id as int),'*')
+from(
+	select row_number() over(order by carrera_id) as row_id, *
+	from platzi.alumnos
+)as alumnos_row
+where row_id <=5
+order by carrera_id;
+```
+Reto rpad
+realiza la funcion contraria a lpd
+empieza por sql luego llena con 15 *
+```
+select rpad('sql',15,'*')
+```
 
 ## Clase 22 Generando rangos
 
