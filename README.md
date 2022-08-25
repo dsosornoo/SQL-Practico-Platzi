@@ -45,6 +45,89 @@ Alumnos_planExpertPlus - Alumnos_planFree
 
 ## Clase 3: Instalacion Postgre
 
+Instalación y configuración de la Base de Datos
+Vamos a instalar PostgreSQL en nuestra computadora. A continuación veremos el paso a paso y algunos consejos útiles para instalar y configurar correctamente PostgreSQL en nuestro equipo. En éste caso, usaremos Windows, pero los pasos son bastante similares entre los diferentes sistemas operativos.
+
+Primer paso: ir a https://www.postgresql.org/.
+
+Ten en cuenta que puedes ver esta página en diferentes idiomas, depende de la configuración predeterminada de idioma de tu navegador.
+
+Hacer clic en el botón ‘Download’ (Descarga) que se encuentra en la parte inferior derecha.
+![image](https://user-images.githubusercontent.com/90301902/186689934-6bd23e55-a3fe-4058-beb7-623e66c65188.png)
+Seleccionamos la opción que corresponda con tu sistema operativo, para éste caso hacemos clic en “Windows”:
+![image](https://user-images.githubusercontent.com/90301902/186690043-e7c07642-e27c-48ff-9194-5454fdfd8b11.png)
+Haz clic en el enlace “Download the installer”. Esto nos va a llevar a la Web de Enterprise DB o EDB. EDB es una empresa que ofrece servicios sobre el motor de base de datos PostgreSQL y ofrece un instalador para Postgres de manera gratuita.
+Es altamente recomendable seleccionar la penúltima o antepenúltima versión. Si bien la última versión estable está disponible, en éste caso la 12.0, no es recomendable instalarla en nuestro equipo, ya que al momento de instalarla o usar un servicio en la Nube para Postgres, lo más seguro es que no esté disponible y sólo esté hasta la versión 11.5, que no es la última versión. Esto porque todos los proveedores de Infraestructura no disponen de la versión de Postgres más actual siempre (tardan un poco en apropiar los nuevos lanzamientos).
+Si tienes un equipo con Linux, la instalación la puedes hacer directamente desde los repositorios de Linux, EDB ya no ofrece soporte para instaladores en Linux debido a que se ha vuelto innecesario, el repositorio de Linux con PostgreSQL ofrece una manera mucho más sencilla y estándar para instalar PostgreSQL en linux.
+
+Segundo paso: descargamos la versión “Windows x86-64” (porque nuestro sistema operativo es de 64 bits). En caso de que tu equipo sea de 32 bits debes seleccionar la opción “Windows x86-32”.
+
+Vamos a descargar la versión 11.5. Hacemos clic en Download y guardamos el archivo que tendrá un nombre similar a:
+“postgresql-11.5-2-windows-x64.exe”
+
+Ahora vamos a la carpeta donde descargamos el archivo .exe, debe ser de aproximadamente 190 MB, lo ejecutamos.
+![image](https://user-images.githubusercontent.com/90301902/186690247-246099b1-a416-4f39-95d9-a43ce34e94d7.png)
+![image](https://user-images.githubusercontent.com/90301902/186690269-bc441be3-8635-4c25-afdb-19a73816cb26.png)
+Seleccionamos los servicios que queremos instalar. En este caso dejamos seleccionados todos menos “Stack Builder”, pues ofrece la instalación de servicios adicionales que no necesitamos hasta ahora.
+![image](https://user-images.githubusercontent.com/90301902/186690345-3d5096c6-4579-4611-a17f-81a1216fec5e.png)
+Ahora indicamos la carpeta donde iran guardados los datos de la base de datos, es diferente a la ruta de instalación del Motor de PostgreSQL, pero normalmente será una carpeta de nuestra carpeta de instalación. Puedes cambiar la ruta si quieres tener los datos en otra carpeta.
+![image](https://user-images.githubusercontent.com/90301902/186690427-0b2d97f6-59d8-4d57-b59f-da1c4ad6fffb.png)
+Ingresamos la contraseña del usuario administrador. De manera predeterminada, Postgres crea un usuario super administrador llamado postgres que tiene todos los permisos y acceso a toda la base de datos, tanto para consultarla como para modificarla. En éste paso indicamos la clave de ese usuario super administrador.
+
+Debes ingresar una clave muy segura y guardarla porque la vas a necesitar después. Luego hacemos clic en siguiente.
+![image](https://user-images.githubusercontent.com/90301902/186690503-11669aa0-741e-4a68-8cf8-ca2a9a02b9a1.png)
+Ahora si queremos cambiar el puerto por donde el servicio de Postgresql estará escuchando peticiones, podemos hacerlo en la siguiente pantalla, si queremos dejar el predeterminado simplemente hacemos clic en siguiente.
+![image](https://user-images.githubusercontent.com/90301902/186690628-af86932d-709f-4e6f-a4d1-863fb9e68587.png)
+La configuración regional puede ser la predeterminada, no es necesario cambiarla, incluso si vamos a usarla en español, ya que las tildes y las eñes estarán soportadas si dejas la configuración regional predeterminada. Es útil cambiarla cuando quieras dejar de soportar otras funciones de idiomas y lenguajes diferentes a uno específico.
+![image](https://user-images.githubusercontent.com/90301902/186690706-65258a4f-f7a2-441f-81e1-ff27ecd739f7.png)
+![image](https://user-images.githubusercontent.com/90301902/186690744-d385af94-f420-4eba-93f4-2b929fa29b69.png)
+Al hacer clic en siguiente se muestra una pantalla que indica que PostgreSQL está listo para instalar, al hacer clic de nuevo en siguiente iniciará la instalación, espera un par de minutos hasta que la aplicación termine.
+
+Una vez terminada la instalación, aparecerá en pantalla un mensaje mostrando que PostgreSQL ha sido instalado correctamente.
+![image](https://user-images.githubusercontent.com/90301902/186690806-a578ff85-b24f-41aa-954f-522549ce79bd.png)
+Podemos cerrar ésta pantalla y proceder a comprobar que todo quedó instalado correctamente.
+
+Vamos a buscar el programa PgAdmin, el cual usaremos como editor favorito para ejecutar en él todas las operaciones sobre nuestra base de datos.
+
+También vamos a buscar la consola… Tanto la consola como PgAdmin son útiles para gestionar nuestra base de datos, una nos permite ingresar comando por comandos y la otra nos ofrece una interfaz visual fácil de entender para realizar todas las operaciones.
+![image](https://user-images.githubusercontent.com/90301902/186690941-95dc47b6-1d75-4bb1-a8f4-a93b48ffe351.png)
+
+Archivos de datos SQL: descarga archivo platzi-carreras.sql y archivo platzi-alumnos.sql.
+
+Una vez tienes instalado PostgreSQL y pgAdmin vamos a crear la estructura de datos que veremos a lo largo del curso.
+
+Para hacerlo abre pgAdmin (normalmente está en la dirección: http://127.0.0.1:63435/browser/), y expande el panel correspondiente a tu base de datos, en mi caso la he nombrado “prueba”.
+![image](https://user-images.githubusercontent.com/90301902/186691115-68e7f1e4-2c83-46dd-a437-c7257075c428.png)
+En la sección esquemas da click secundario y selecciona la opción Create > Schema…
+![image](https://user-images.githubusercontent.com/90301902/186691185-cef25596-d264-455f-b7ea-8b686379a649.png)
+Al seleccionar la opción abrirá un cuadro de diálogo en donde debes escribir el nombre del esquema, en este caso será “platzi”. Si eliges un nombre distinto, asegúrate de seguir los ejemplos en el curso con el nombre elegido; por ejemplo si en el curso mencionamos la sentencia:
+```
+SELECT * FROM platzi.alumnos
+```
+Sustituye platzi por el nombre que elegiste.
+
+Finalmente selecciona tu usuario de postgres en el campo Owner, esto es para que asigne todos los permisos del nuevo esquema a tu usuario
+![image](https://user-images.githubusercontent.com/90301902/186691461-d48ec47a-e18a-4f31-9fcd-b8abaea64eff.png)
+Revisa que tu esquema se haya generado de manera correcta recargando la página y expandiendo el panel Schemas en tu base de datos.
+
+![image](https://user-images.githubusercontent.com/90301902/186691510-f0f37c8c-99aa-4f00-967b-cfa48dfca83b.png)
+Dirígete al menú superior y selecciona el menú Tools > Query Tool.
+![image](https://user-images.githubusercontent.com/90301902/186691566-5d0f0367-aee4-4915-ab01-a7d51a1af6f9.png)
+Esto desplegará la herramienta en la ventana principal. Da click en el botón “Open File” ilustrado por un icono de folder abierto.
+![image](https://user-images.githubusercontent.com/90301902/186691631-d1aeca4b-e636-4054-b7b4-1f43ed679f48.png)
+Busca en tus archivos y selecciona el archivo platzi.alumnos.sql que descargaste de este curso, da click en el botón “Select”.
+![image](https://user-images.githubusercontent.com/90301902/186691680-d871a259-ea28-41fb-9f85-d7011f4c77a6.png)
+Esto abrirá el código SQL que deberás ejecutar dando click en el botón ”Execute/Refresh” con el icono play.
+![image](https://user-images.githubusercontent.com/90301902/186691752-9f2857d6-a89d-498f-9356-38ee4d71e42c.png)
+Al terminar debes ver un aviso similar al siguiente:
+![image](https://user-images.githubusercontent.com/90301902/186691808-b7e08653-adb8-493f-bbc0-35d26e10ad92.png)
+Ahora repetiremos el proceso para la tabla platzi.carreras
+![image](https://user-images.githubusercontent.com/90301902/186691868-d83967b6-37a6-4b21-a03c-1c4417a4ced9.png)
+![image](https://user-images.githubusercontent.com/90301902/186691907-700b928b-6e75-49b6-b4cd-d0ea5e026da1.png)
+![image](https://user-images.githubusercontent.com/90301902/186691954-b231fbcc-962f-4841-80b4-d5968d3817e2.png)
+![image](https://user-images.githubusercontent.com/90301902/186692049-31214c81-f1e3-419c-8449-b5c2b882094e.png)
+
+
 ## Clase 4: Qué es una proyección (SELECT)
 
 Proyección significa elegir QUE columnas (o expresiones) la consulta debe retornar.
