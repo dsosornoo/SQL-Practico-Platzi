@@ -1041,11 +1041,54 @@ group by tutor,a.carrera_id
 order by tutor_carrera desc)
 as prom_tutor;
 ```
+
+
+## Clase 19 Resolviendo Diferencias
+Ejemplos
 ```
+select carrera_id, count(*) as cuenta
+from platzi.alumnos
+group by carrera_id
+order by cuenta desc;
 
 ```
+De la tabla carrera Borrar id entre 30-40
+```
+delete from platzi.carreras
+where id between 30 and 40;
 
-## Clase 19 
+```
+left join exclusive
+```
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera		
+from platzi.alumnos as a
+--left join nos interesa la tabla a la izquierda
+-- que es la primera tabla que ponemos
+--en el from
+	left join platzi.carreras as c
+	on a.carrera_id = c.id
+-- solo los datos tabla alumnos
+-- cuales son los alumnos que se quedaron sin carrera 
+where c.id is null
+order by a.carrera_id desc;
+
+```
+Reto
+```
+select concat(a.nombre,'-',a.apellido) as alumno,
+		a.carrera_id,
+		c.id,
+		c.carrera
+from platzi.alumnos as a
+	left join platzi.carreras as c
+	on a.carrera_id = c.id
+
+order by a.carrera_id desc;
+```
+
 
 ## Clase 20
 
