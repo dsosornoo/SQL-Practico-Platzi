@@ -1,6 +1,6 @@
 # SQL-Practico-Platzi
 
-#Introduccion a SQL
+# Introduccion a SQL
 ## Clase 1: Breve historia de SQL
 
 SQL (Structured Query Language - Lenguaje de consulta estructurada) es un lenguaje que se basó en 2 principios fundamentales:
