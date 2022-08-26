@@ -1322,7 +1322,38 @@ empieza por sql luego llena con 15 *
 select rpad('sql',15,'*')
 ```
 
+/* TOKENIZANDO */
+para esconder informacion de usuarios
+```
+SELECT nombre,rpad(SUBSTR(nombre, 1, 2),LENGTH(nombre),'*'),
+       apellido,rpad(SUBSTR(apellido, 1, 2),LENGTH(apellido),'*'), 
+	    email,rpad(SUBSTR(email, 1, 2),LENGTH(email),'*')
+FROM platzi.alumnos
+```
+
+
 ## Clase 22 Generando rangos
+Generando Rangos
+
+Se hace con la función generate_series()
+Genera una tabla con una única columna dinámica
+Recibe tres parámetros
+El primero es el número de inicio de la serie
+El segundo es el final de la serie
+El tercero es el delta o paso, que puede ser negativo si hay overlap
+Overlap es cuando el numero de inicio > numero de final
+Se pueden utilizar fechas
+El delta se puede escribir literal para el caso de timestamps
+
+
+El tercer parámetro de generate_series tiene el formato :
+{optional}step/interval]
+
+El cual indica que no siempre es necesario, como los primeros ejemplos.
+El parámetro “step” numérico o timestamp
+El tercer parámetro es el intervalo y en caso de ser timestamp puede pasarse cualquiera de estos :
+![image](https://user-images.githubusercontent.com/90301902/186722372-aba37d67-4986-4794-ab52-4da5b871d225.png)
+
 
 
 ## Clase 23 Regularizando expresiones
