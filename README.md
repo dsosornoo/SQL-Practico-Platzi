@@ -1525,6 +1525,7 @@ Inconvenientes
 Cuando debamos hacer joins frecuentemente entre shards
 Baja elasticidad. Los shards crecen de forma irregular unos más que otros y vuelve a ser necesario usar sharding (subsharding)
 La llave primaria pierde utilidad
+
 ![image](https://user-images.githubusercontent.com/90301902/186934097-5bef568d-9e4e-47a0-9ce2-06661519e568.png)
 
 ![image](https://user-images.githubusercontent.com/90301902/186934050-54319422-d369-4be9-9458-825e9359184a.png)
@@ -1532,10 +1533,134 @@ La llave primaria pierde utilidad
 ![image](https://user-images.githubusercontent.com/90301902/186934229-e6c709e9-5b41-4ba1-8693-92dfba531c57.png)
 
 
-
-
 ## Clase 27 window functions
 
+Window Functions
+Realizan cálculos que relacionan una tupla con el resto dentro de un mismo scope o partición.
+
+Evita el uso del self joins
+Reduce la complejidad alrededor de la analítica, agregaciones y cálculos
+Luego de una agregación, la función OVER dicta el scope de la window function, al realizar un PARTITION BY campo
+Si no se especifica un PARTITION BY, la funcion OVER() por default tomará toda la tabla
+También se puede usar ORDER BY campo, esto agrega un campo de granularidad al cálculo, a la vez que agrupa todos los valores iguales dentro de la partición, que ahora se encuentran ordenados
+
+```
+SELECT *
+SUM(colegiatura) OVER (PARTITION BY carrera_id ORDER BY colegiatura)
+FROM platzi.alumnos;
+Podemos usar funciones de RANK()
+```
+Las Window Function se procesan casi al final de todas las operaciones, por eso para usar estas WF como un campo en WHERE, debemos hacer un subquery
+
+```
+SELECT *
+FROM (
+SELECT *,
+RANK() OVER (PARTITION BY carrera_id ORDER BY colegiatura DESC) AS brand_rank
+FROM platzi.alumnos
+) AS ranked_colegiaturas_por_carrera
+WHERE brand_rank < 3
+ORDER BY brand_rank;
+
+```
+
+```
+select *, 
+	aVG(colegiatura) over(partition by carrera_id)
+from platzi.alumnos;
+```
+```
+select *, 
+	sum(colegiatura) over(partition by carrera_id order by carrera_id)
+from platzi.alumnos;
+
+```
+
+```
+
+select *, 
+	rank() over(partition by carrera_id order by colegiatura desc)
+from platzi.alumnos;
+```
+```
+select *, 
+	rank() over(partition by carrera_id order by colegiatura desc) as brand_rank
+from platzi.alumnos
+order by carrera_id, brand_rank;
+
+```
+```
+select *
+from(
+	select *,
+	rank() over(partition by carrera_id order by colegiatura desc) as brand_rank
+from platzi.alumnos
+) as ranked_colegiatura_carrera
+where brand_rank <3
+order by brand_rank;
+```
 ## Clase 28 particiones y agregacion
 
+- ROW_NUMBER(): nos da el numero de la tupla que estamos utilizando en ese momento.
+- OVER([PARTITION BY column] [ORDER BY column DIR]): nos deja Particionar y Ordenar la window function.
+- PARTITION BY(column/s): es un group by para la window function, se coloca dentro de OVER.
+- FIRST_VALUE(column): devuelve el primer valor de una serie de datos.
+- LAST_VALUE(column): Devuelve el ultimo valor de una serie de datos.
+- NTH_VALUE(column, row_number): Recibe la columna y el numero de row que queremos devolver de una serie de datos
+- RANK(): nos dice el lugar que ocupa de acuerdo a el orden de cada tupla, deja gaps entre los valores.
+- DENSE_RANK(): Es un rango mas denso que trata de eliminar los gaps que nos deja RANK.
+- PERCENT_RANK(): Categoriza de acuerdo a lugar que ocupa igual que los anteriores pero por porcentajes.
+
+```
+-- row number orden consecutivo por row
+select row_number() over() as row_id,*
+from platzi.alumnos
+```
+```
+--ordenado por fecha de incorporacion
+select row_number() over(order by fecha_incorporacion) as row_id,*
+from platzi.alumnos
+```
+```
+select first_value(colegiatura) over() as row_id,*
+from platzi.alumnos
+```
+```
+--va arrojar el primer valor de colegiatura por carrera id
+select first_value(colegiatura) over(partition by carrera_id) as primera,*
+from platzi.alumnos
+```
+```
+select last_value(colegiatura) over(partition by carrera_id) as ultima,*
+from platzi.alumnos
+
+```
+```
+select nth_value(colegiatura,3) over(partition by carrera_id) as enesimo,*
+from platzi.alumnos
+```
+```
+--gank o saltos deja el rank
+select *,
+	rank() over(partition by carrera_id order by colegiatura desc) as ranka
+from platzi.alumnos
+order by carrera_id, ranka;
+```
+```
+select *,
+	dense_rank() over(partition by carrera_id order by colegiatura desc) as ranka
+from platzi.alumnos
+order by carrera_id, ranka;	
+```
+```
+select *,
+	percent_rank() over(partition by carrera_id order by colegiatura desc) as ranka
+from platzi.alumnos
+order by carrera_id, ranka;
+
+```
+
+
+
 ## Clase 29 el futuro de sql
+
