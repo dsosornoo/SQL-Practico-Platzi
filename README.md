@@ -1354,16 +1354,185 @@ El parámetro “step” numérico o timestamp
 El tercer parámetro es el intervalo y en caso de ser timestamp puede pasarse cualquiera de estos :
 ![image](https://user-images.githubusercontent.com/90301902/186722372-aba37d67-4986-4794-ab52-4da5b871d225.png)
 
+Ejemplos:
+```
+--generar series
+select *
+from generate_series(1,4);
+```
+```
+-- tercer parametro se indican los pasos o delta
+select *
+from generate_series(5,1,-2);
+```
+```
+--si el primero es mayor al segundo intervalo
+-- se genera un resultado vacio
+select *
+from generate_series(4,3);
+```
+```
+--tambien funciona con  numeros decimales
+select *
+from generate_series(1.1,4,1.3);
+```
+```
+--series de tiempo
+-- fecha actual mas el numero de dias que vaya
+-- en cada tupla generada
+select current_date +s.a as dates
+from generate_series(0,14,7) as s(a)
+```
 
+```
+select *
+from generate_series('2020-09-01 00:00:00'::timestamp,
+					 '2020-09-04 12:00:00','10 hours')
+```
+```
+-- alumnos que tienen un carrera id 1 al 10					 
+select a.id,a.nombre, a.carrera_id, s.a
+from platzi.alumnos as a
+	inner join generate_series(0,10) as s(a)
+	on s.a=a.carrera_id
+order by a.carrera_id
+```
+Reto
+```
+select lpad('-',generate_series(10,0,-1),'*') 
 
+```
+```
+select lpad('-',generate_series(0,10),'*')
+```
+```
+SELECT lpad('\', s.a, rpad(lpad('/', d.e, ' '), s.a, '*'))
+FROM generate_series(18, 26) AS s(a), 
+	 generate_series(17,0,-2) AS d(e)
+LIMIT 10;
+```
 ## Clase 23 Regularizando expresiones
+
+```
+--expresiones regulares sirven para hacer 
+--comprobaciones
+-- de la a a la z por 9 espacios
+--luego el arroba de la a a la z 9 espacios
+select email
+from platzi.alumnos
+where email ~*'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'
+
+```
+```
+select email
+from platzi.alumnos
+where email ~*'[A-Z0-9._%+-]+@google[A-Z0-9.-]+\.[A-Z]{2,4}'
+
+```
+
+
 # Conceptos de SQL avanzado
 
 ## Clase 24 bases de datos distribuidas
+Resumen:
+Las bases de datos distribuidas: es una colección de múltiples bases de datos separadas físicamente que se comunican mediante una red informática.
+
+VENTAJAS:
+
+-desarrollo modular.
+-incrementa la confiabilidad.
+-mejora el rendimiento.
+-mayor disponibilidad.
+-rapidez de respuesta.
+
+DESVENTAJAS:
+
+-Manejo de seguridad.
+-complejidad de procesamiento.
+-Integridad de datos más compleja.
+-Costo.
+
+TIPOS:
+
+Homogéneas: mismo tipo de BD, manejador y sistema operativo. (aunque esté distribuida).
+Heterogénea: puede que varíen alguna de los anteriores características.
+-OS
+-Sistema de bases de datos.
+-Modelo de datos.
+
+ARQUITECTURAS:
+-** cliente- servidor**: donde hay una BD principal y tiene varias BD que sirven como clientes o como esclavas que tratarán de obtener datos de la principal, a la que normalmente se hacen las escrituras.
+
+Par a par (peer 2 peer): donde todos los puntos en la red de bd son iguales y se hablan como iguales sin tener que responder a una sola entidad.
+multi manejador de bases de datos.
+ESTRATEGIA DE DISEÑO:
+
+top down: es cuando planeas muy bien la BD y la vas configurando de arriba hacia abajo de acuerdo a tus necesidades.
+bottom up: ya existe esa BD y tratas de construir encima.
+ALMACENAMIENTO DISTRIBUIDO:
+
+-Fragmentación: qué datos van en dónde.
+
+fragmentación horizontal: (sharding) partir la tabla que estás utilizando en diferentes pedazos horizontales.
+
+fragmentación vertical: cuando parto por columnas.
+
+fragmentación mixta: cuando tienes algunas columnas y algunos datos en un lugar y algunas columnas y algunas tuplas en otro lugar.
+
+-Replicación: tienes los mismos datos en todas ala BBDD no importa donde estén.
+
+-replicación completa: cuando toda al BD está en varias versiones a lo largo del globo, toda la información está igualita en todas las instancias de BD.
+-replicación parcial: cuando algunos datos están replicados y compartidos en varias zonas geográficas
+-sin replicación: no estás replicando nada de los datos, cada uno está completamente separa y no tienen que estarse hablando para sincronizar datos entre ellas.
+
+DISTRIBUCIÓN DE DATOS:
+
+-Distribución: cómo va a pasar la data entre una BD y otra. Tiene que ver mucho con networking, tiempos, latencia, etc. Pueden ser:
+
+Centralizada: cuando la distribuyes des un punto central a todas las demás
+Particionada: está partida en cada una de las diversas zonas geográficas y se comparten información entre ellas.
+Replicada: tener la misma información en todas y entre ellas se hablan para siempre tener la misma versión.
 
 ## Clase 25 queries distribuidos
 
+
+En el caso que la base de datos se encuentra distribuida en multiples regiones y la informacion se encuentra fragmentada la construccion de queries debe tener un debido nivel de analisis.
+
+Debido a que en una sola base de datos responder una misma pregunta puede tener multiples soluciones con diferencias de ejecuccion en el rango de milisegundos.
+Pero en las bases de datos distribuidas dependiendo de en donde se encuentre la informacion fisicamente, que informacion hay en cada region y que pregunta se quiere contestar, las diferentes formas de resolver la pregunta mediante una consulta SQL puede tener vastas diferencias en el tiempo de ejecucion,como ejemplo algunas soluciones pudiesen llegar al rango de 5 horas para ejecutarse y otras solamente necesitando 0.10 segundos.
+
+Existen cálculos que ayudan a preveer estos tiempos de respuesta, por ejemplo:
+
+Retraso total de comunicación =
+(Retraso total de acceso) + (volumen total de datos / tasa de transferencia)
+
+Analiza cual tabla tiene la menor cantidad de datos (columnas+tablas)
+Filtra esos registros donde sea menor cantidad
+Trae esos pocos registros a la misma región donde están la mayor cantidad de datos
+evitar realizar JOINs cuando se encuentran en zonas geográficamente diferentes.
+
+
 ## Clase 26 sharding
+
+Dividir la data en varios servidores por algun criterio util para ti
+
+Es un tipo de partición horizontal para nuestras bases de datos. Divide las tuplas de nuestras tablas en diferentes ubicaciones de acuerdo a ciertos criterios de modo que para hacer consultas, las tendremos que dirigir al shard o parte que corresponda.
+
+Cuándo usar
+Cuando tenemos grandes volúmenes de información estática que representa un problema para obtener solo unas cuantas tuplas en consultas frecuentes.
+
+Inconvenientes
+Cuando debamos hacer joins frecuentemente entre shards
+Baja elasticidad. Los shards crecen de forma irregular unos más que otros y vuelve a ser necesario usar sharding (subsharding)
+La llave primaria pierde utilidad
+![image](https://user-images.githubusercontent.com/90301902/186934097-5bef568d-9e4e-47a0-9ce2-06661519e568.png)
+
+![image](https://user-images.githubusercontent.com/90301902/186934050-54319422-d369-4be9-9458-825e9359184a.png)
+
+![image](https://user-images.githubusercontent.com/90301902/186934229-e6c709e9-5b41-4ba1-8693-92dfba531c57.png)
+
+
+
 
 ## Clase 27 window functions
 
